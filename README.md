@@ -69,11 +69,11 @@ Die folgenden Ansichten zeigen die tatsächliche Programmoberfläche aus Version
 
 | Deutsches Hauptfenster | Englisches Hauptfenster |
 |---|---|
-| ![DiagramBridge – Hauptfenster Deutsch](docs/screenshots/diagrambridge-main-de.png) | ![DiagramBridge – Main window English](docs/screenshots/diagrambridge-main-en.png) |
+| ![DiagramBridge – Hauptfenster Deutsch](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-main-de.png) | ![DiagramBridge – Main window English](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-main-en.png) |
 
 | Visuelles Handbuch – Deutsch | Visual guide – English |
 |---|---|
-| ![Visuelles Handbuch in Deutsch](docs/screenshots/diagrambridge-guide-de.png) | ![Visual guide in English](docs/screenshots/diagrambridge-guide-en.png) |
+| ![Visuelles Handbuch in Deutsch](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-guide-de.png) | ![Visual guide in English](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-guide-en.png) |
 
 ### Architektur
 
