@@ -69,74 +69,11 @@ Die folgenden Ansichten zeigen die tatsächliche Programmoberfläche aus Version
 
 | Deutsches Hauptfenster | Englisches Hauptfenster |
 |---|---|
-| ![DiagramBridge – Hauptfenster Deutsch](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-main-de.png) | ![DiagramBridge – Main window English](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-main-en.png) |
+| ![DiagramBridge – Hauptfenster Deutsch](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-main-de.jpg) | ![DiagramBridge – Main window English](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-main-en.jpg) |
 
 | Visuelles Handbuch – Deutsch | Visual guide – English |
 |---|---|
-| ![Visuelles Handbuch in Deutsch](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-guide-de.png) | ![Visual guide in English](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-guide-en.png) |
-
-### Architektur
-
-DiagramBridge trennt die Windows-Oberfläche, die Konvertierungsorchestrierung und die lokal ausgeführte Export-Engine.
-
-```mermaid
-flowchart TD
-    UI["WPF desktop UI<br/>MainWindow / ManualWindow"] --> JOBS["ConversionJob<br/>Queue and status"]
-    JOBS --> CONV["ConverterService<br/>Konvertierungsablauf"]
-    CONV --> BOOT["EngineBootstrapper"]
-    BOOT --> CACHE["Lokaler Anwendungscache<br/>%LOCALAPPDATA%\\DiagramBridge"]
-    CACHE --> NODE["Node.js Runtime"]
-    CACHE --> DRAWIO["diagrams.net Web-App"]
-    CACHE --> PW["Playwright"]
-    NODE --> BROWSER["Installiertes Edge / Chrome<br/>Headless Chromium"]
-    PW --> BROWSER
-    DRAWIO --> SESSION["Local editor session<br/>127.0.0.1"]
-    BROWSER --> SESSION
-    SESSION --> VSDX["Nativer VSDX-Export"]
-    SESSION --> PDF["SVG-Seiten → PDF"]
-    VSDX --> NATIVE["VsdxNativeProcessor<br/>Restore source page names"]
-    NATIVE --> VALID["VsdxValidator<br/>VSDX package validation"]
-    VALID --> OUT1["Output: .vsdx"]
-    PDF --> OUT2["Ausgabe: .pdf"]
-```
-
-#### Komponenten
-
-| Komponente | Verantwortung |
-|---|---|
-| `MainWindow` | WPF-Hauptoberfläche, Dateiauswahl, Drag-and-drop, Warteschlange, Ausgabeoptionen, Status und Protokoll. |
-| `ManualWindow` | Integriertes visuelles Handbuch mit lokalisierten Texten. |
-| `Localization` | Übersetzung der UI- und Statusmeldungen zwischen Deutsch und Englisch. |
-| `ConversionJob` | Datenmodell eines Warteschlangeneintrags einschließlich Status, Details und Ausgabename. |
-| `ConverterService` | Validiert Eingaben, erstellt eine temporäre Arbeitskopie, startet die Engine, koordiniert die Ausgabe und räumt temporäre Arbeitsdaten auf. |
-| `EngineBootstrapper` | Prüft die lokale Engine und richtet fehlende, festgelegte Laufzeitkomponenten ein. |
-| `export_vsdx.js` | Öffnet die lokale diagrams.net-Anwendung über Playwright und steuert den nativen VSDX- beziehungsweise PDF-Export. |
-| `VsdxNativeProcessor` | Stellt die ursprünglichen Seitenbezeichnungen wieder her und prüft die Zuordnung der exportierten Seiten. |
-| `VsdxValidator` | Prüft die Struktur des erzeugten VSDX-Open-XML-Pakets sowie wichtige Beziehungen, Seiten und Visio-Objekte. |
-
-### Technischer Ablauf
-
-1. Die Oberfläche nimmt `.drawio`- oder `.xml`-Dateien in die Warteschlange auf.
-2. Der `ConverterService` erstellt für den jeweiligen Auftrag eine temporäre Kopie der Quelldatei. Die Originaldatei wird nicht direkt bearbeitet.
-3. Der `EngineBootstrapper` prüft die lokale Installation. Fehlende Komponenten werden bei Bedarf heruntergeladen beziehungsweise installiert.
-4. Node.js startet die Exportlogik. Playwright öffnet Microsoft Edge oder Google Chrome im Headless-Modus und lädt die lokal gespeicherte diagrams.net-Webanwendung über einen Loopback-Endpunkt (`127.0.0.1`).
-5. Für VSDX wird der native diagrams.net-Visio-Exporter verwendet. Für PDF werden die Diagrammseiten als SVG aufbereitet und über den Browser als PDF ausgegeben.
-6. Die VSDX-Nachbearbeitung stellt die Quellseitennamen wieder her. Danach wird das VSDX-Paket strukturell validiert.
-7. Erfolgreiche Ausgaben werden in den gewählten Zielordner verschoben. Temporäre Arbeitsdateien werden anschließend entfernt.
-
-### Laufzeitkomponenten
-
-Die folgenden Versionen sind im Programmstand 0.3.20 festgelegt:
-
-| Komponente | Version / Quelle | Verwendung |
-|---|---|---|
-| .NET | `net10.0-windows` | Windows-WPF-Anwendung. |
-| Node.js | `22.23.5` · Windows x64 | Lokale Ausführung der JavaScript-Exportlogik. |
-| diagrams.net | `26.0.16` · Commit `987146fb55a547a975961f57dddc781abf7648ba` | Lokal gespeicherte Diagramm-Editor- und Exportfunktionen. |
-| Playwright | `1.62.0` | Browsersteuerung für den lokalen Export. |
-| Browser | Microsoft Edge oder Google Chrome | Headless-Ausführung der lokalen diagrams.net-Sitzung. |
-
-Die Engine-Komponenten werden nicht vollständig in das Programmarchiv eingebettet. Sie werden beim ersten Einrichten in `%LOCALAPPDATA%\DiagramBridge` abgelegt. Dafür ist eine Internetverbindung erforderlich. Nach erfolgreicher Einrichtung können die lokal vorhandenen Komponenten für weitere Konvertierungen verwendet werden.
+| ![Visuelles Handbuch in Deutsch](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-guide-de.jpg) | ![Visual guide in English](https://github.com/JeromeX/DiagramBridge/raw/main/docs/screenshots/diagrambridge-guide-en.jpg) |
 
 ### Datenschutz und lokale Verarbeitung
 
@@ -229,69 +166,6 @@ DiagramBridge provides German and English interface text, including status messa
 
 Settings are stored at `%LOCALAPPDATA%\DiagramBridge\settings.json`.
 
-
-### Architecture
-
-DiagramBridge separates the Windows user interface, conversion orchestration, and the locally executed export engine.
-
-```mermaid
-flowchart TD
-    UI["WPF desktop UI<br/>MainWindow / ManualWindow"] --> JOBS["ConversionJob<br/>Queue and status"]
-    JOBS --> CONV["ConverterService<br/>Conversion orchestration"]
-    CONV --> BOOT["EngineBootstrapper"]
-    BOOT --> CACHE["Local application cache<br/>%LOCALAPPDATA%\\DiagramBridge"]
-    CACHE --> NODE["Node.js runtime"]
-    CACHE --> DRAWIO["diagrams.net web app"]
-    CACHE --> PW["Playwright"]
-    NODE --> BROWSER["Installed Edge / Chrome<br/>Headless Chromium"]
-    PW --> BROWSER
-    DRAWIO --> SESSION["Local editor session<br/>127.0.0.1"]
-    BROWSER --> SESSION
-    SESSION --> VSDX["Native VSDX export"]
-    SESSION --> PDF["SVG pages → PDF"]
-    VSDX --> NATIVE["VsdxNativeProcessor<br/>Restore source page names"]
-    NATIVE --> VALID["VsdxValidator<br/>VSDX package validation"]
-    VALID --> OUT1["Output: .vsdx"]
-    PDF --> OUT2["Output: .pdf"]
-```
-
-#### Components
-
-| Component | Responsibility |
-|---|---|
-| `MainWindow` | WPF main interface, file selection, drag-and-drop, queue, output options, status, and log. |
-| `ManualWindow` | Built-in visual guide with localized text. |
-| `Localization` | German and English translations for UI and status messages. |
-| `ConversionJob` | Queue item model, including state, details, and output name. |
-| `ConverterService` | Validates input, creates a temporary working copy, starts the engine, coordinates outputs, and cleans up temporary work files. |
-| `EngineBootstrapper` | Checks the local engine and initializes missing, pinned runtime components. |
-| `export_vsdx.js` | Opens the local diagrams.net application through Playwright and controls native VSDX and PDF export. |
-| `VsdxNativeProcessor` | Restores original diagram page names and checks the mapping of exported pages. |
-| `VsdxValidator` | Validates the generated VSDX Open XML package structure, relationships, pages, and Visio objects. |
-
-### Processing flow
-
-1. The UI adds `.drawio` or `.xml` files to the conversion queue.
-2. `ConverterService` creates a temporary copy for each job. The original source file is not edited directly.
-3. `EngineBootstrapper` checks the local installation. Missing components are downloaded or installed when required.
-4. Node.js starts the export logic. Playwright launches Microsoft Edge or Google Chrome in headless mode and loads the locally stored diagrams.net web app through a loopback endpoint (`127.0.0.1`).
-5. VSDX output uses the native diagrams.net Visio exporter. For PDF output, diagram pages are prepared as SVG and printed to PDF by the browser.
-6. VSDX post-processing restores source page names. The VSDX package is then structurally validated.
-7. Successful outputs are moved to the selected destination. Temporary working files are removed afterwards.
-
-### Runtime components
-
-The following versions are pinned in application version 0.3.20:
-
-| Component | Version / source | Purpose |
-|---|---|---|
-| .NET | `net10.0-windows` | Windows WPF application. |
-| Node.js | `22.23.5` · Windows x64 | Local execution of the JavaScript export logic. |
-| diagrams.net | `26.0.16` · commit `987146fb55a547a975961f57dddc781abf7648ba` | Locally stored diagram editor and export functions. |
-| Playwright | `1.62.0` | Browser automation for local export. |
-| Browser | Microsoft Edge or Google Chrome | Headless execution of the local diagrams.net session. |
-
-The engine components are not all embedded in the application archive. They are stored under `%LOCALAPPDATA%\DiagramBridge` during first-time setup. An internet connection is required for this initial setup. After setup, subsequent conversions can use the locally cached components.
 
 ### Privacy and local processing
 
