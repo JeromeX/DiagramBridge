@@ -108,14 +108,13 @@ Die folgenden Ansichten zeigen die tatsächliche Programmoberfläche aus Version
 
 ### Drittanbieter und Lizenzen
 
-DiagramBridge verwendet beziehungsweise adaptiert Komponenten aus folgenden Projekten:
+**DiagramBridge ist dein eigenständiges, proprietäres Produkt.** Die originale WPF-Anwendung, Oberfläche, Lokalisierung, Konvertierungssteuerung, Engine-Einrichtung und VSDX-Prüflogik sind separate DiagramBridge-Projektarbeit und werden durch dieses Dokumentations-Repository nicht als Open Source freigegeben.
 
-- [Larry-Labs/drawio-to-visio](https://github.com/Larry-Labs/drawio-to-visio) – Upstream-Ansatz für den lokalen, Playwright-gesteuerten VSDX-Export; Apache License 2.0.
-- [Node.js](https://nodejs.org/) – Laufzeitumgebung; eigene Node.js-Lizenzbedingungen.
-- [diagrams.net / draw.io](https://github.com/jgraph/drawio) – lokal heruntergeladene Diagramm- und Exportanwendung; eigene Lizenzbedingungen.
-- [Playwright](https://github.com/microsoft/playwright) – Browserautomatisierung; eigene Lizenzbedingungen.
+Ein abgegrenzter Teil der Exportlogik (`export_vsdx.js`) adaptiert den lokalen Exportansatz aus [Larry-Labs/drawio-to-visio](https://github.com/Larry-Labs/drawio-to-visio). Für dieses adaptierte Exportmaterial gilt Apache License 2.0. Die vollständige Lizenz liegt unter [licenses/Apache-2.0-Larry-Labs-Exporter.txt](licenses/Apache-2.0-Larry-Labs-Exporter.txt).
 
-Die `THIRD-PARTY-NOTICES.md` und `LICENSE` im Repository enthalten die zugehörigen Hinweise. Die Drittanbieterhinweise beschreiben den Apache-2.0-Lizenzumfang ausdrücklich für den adaptierten Exporter-Anteil; daraus sollte keine pauschale Lizenzzusage für sämtliche getrennten Anwendungskomponenten abgeleitet werden.
+Node.js, diagrams.net und Playwright werden bei der erstmaligen Engine-Einrichtung separat bezogen und behalten ihre jeweiligen Upstream-Lizenzen. Sie werden nicht dadurch zu deinem Eigentum, dass DiagramBridge sie verwendet.
+
+Siehe [PROPRIETARY-NOTICE.md](PROPRIETARY-NOTICE.md) und [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ---
 
@@ -200,14 +199,13 @@ Settings are stored at `%LOCALAPPDATA%\DiagramBridge\settings.json`.
 
 ### Third-party components and licences
 
-DiagramBridge uses or adapts components from the following projects:
+**DiagramBridge is your independent, proprietary product.** The original WPF application, user interface, localization, conversion orchestration, engine setup, and VSDX validation logic are separate DiagramBridge project work. This documentation repository does not release those original application components as open source.
 
-- [Larry-Labs/drawio-to-visio](https://github.com/Larry-Labs/drawio-to-visio) – upstream approach for local Playwright-driven VSDX export; Apache License 2.0.
-- [Node.js](https://nodejs.org/) – runtime environment; separate Node.js licence terms.
-- [diagrams.net / draw.io](https://github.com/jgraph/drawio) – locally downloaded diagram and export application; separate licence terms.
-- [Playwright](https://github.com/microsoft/playwright) – browser automation; separate licence terms.
+A limited part of the export logic (`export_vsdx.js`) adapts the local export approach from [Larry-Labs/drawio-to-visio](https://github.com/Larry-Labs/drawio-to-visio). The adapted exporter material is subject to the Apache License 2.0. The complete license is provided at [licenses/Apache-2.0-Larry-Labs-Exporter.txt](licenses/Apache-2.0-Larry-Labs-Exporter.txt).
 
-The repository's `THIRD-PARTY-NOTICES.md` and `LICENSE` files contain the related notices. The third-party notice explicitly describes the Apache 2.0 scope for the adapted exporter portion; it should not be interpreted as a blanket licensing statement for every separate application component.
+Node.js, diagrams.net, and Playwright are obtained separately during first-time engine setup and remain subject to their respective upstream licenses. Using these components does not make them your intellectual property.
+
+See [PROPRIETARY-NOTICE.md](PROPRIETARY-NOTICE.md) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ---
 
